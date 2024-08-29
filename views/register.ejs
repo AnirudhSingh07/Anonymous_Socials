@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="styles.css">
+
+
+<div class="form-container1" >
+
+  <div class="navbar">
+    <div>
+      <a class="btn2" href="/home" role="button">Login</a>
+      <a class="btn2" href="/submit" role="button">Write</a>
+      <a class="btn2" href="/all" role="button">All</a>
+      <a class="btn2" href="/accounts" role="button">Account</a>
+      <a class="btn2" href="/chat.html" role="button">Chat</a></div>
+    
+  </div>
+
+  <p class="title">Register Now</p>
+
+  <form class="form" action="/register" method="POST">
+    <input type="email" class="input" placeholder="Email" name="username"  required>
+    <input type="password" class="input" placeholder="Password" name="password">
+    <button class="form-btn" type="submit">Register</button>
+  </form>
+
+
+</div>
+
+<%- include('partials/footer') %>
+

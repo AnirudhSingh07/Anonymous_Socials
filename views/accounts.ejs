@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="container">
+  <h1>Username Generator</h1>
+  <p>Generate unique usernames with just a click!</p>
+  <form id="usernameForm">
+      <button type="button" class="btn" onclick="generateAndDisplayUsernames()">Generate</button>
+  </form>
+  <ul id="usernameList"></ul>
+  <button id="selectButton" class="btn" type="button" onclick="selectUsername()" style="display: none;"><a href="/blogs">Select</a></button>
+</div>
+
+<script>
+  const usedUsernames = new Set();
+
+  function generateRandomUsername(length) {
+      const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let username = '';
+
+      for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          username += characters[randomIndex];
+      }
+
+      return username;
+  }
+
+  function generateUniqueRandomUsername(length) {
+      let username = generateRandomUsername(length);
+
+      while (usedUsernames.has(username)) {
+          username = generateRandomUsername(length);
+      }
+
+      usedUsernames.add(username);
+
+      return username;
+  }
+
+  function generateAndDisplayUsernames() {
+      const usernameList = document.getElementById('usernameList');
+      const selectButton = document.getElementById('selectButton');
+      usernameList.innerHTML = ''; // Clear previous usernames
+      selectButton.style.display = 'none'; // Hide the select button initially
+
+      for (let i = 0; i < 5; i++) {
+          const randomUsername = generateUniqueRandomUsername(8);
+          const listItem = document.createElement('li');
+          const radioButton = document.createElement('input');
+          radioButton.type = 'radio';
+          radioButton.name = 'usernameChoice';
+          radioButton.value = randomUsername;
+          listItem.appendChild(radioButton);
+          listItem.appendChild(document.createTextNode(randomUsername));
+          usernameList.appendChild(listItem);
+      }
+
+      selectButton.style.display = 'block'; // Show the select button after generating usernames
+  }
+
+  function selectUsername() {
+      const usernameList = document.getElementById('usernameList');
+      const selectedUsername = usernameList.querySelector('input[name="usernameChoice"]:checked').value;
+      if (selectedUsername) {
+          alert(`Selected username: ${selectedUsername}`);
+      } else {
+          alert('Please select a username.');
+      }
+  }
+</script>
